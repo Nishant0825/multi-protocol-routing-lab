@@ -1,0 +1,100 @@
+Current configuration : 1136 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2811/K9 sn FTX10170HKL-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 10.0.0.6 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ ip address 10.0.0.9 255.255.255.252
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/0
+ ip address 192.168.1.129 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface FastEthernet1/1
+ ip address 192.168.1.161 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router eigrp 100
+ redistribute bgp 65002 metric 10000 100 255 1 1500 
+ network 192.168.1.128 0.0.0.31
+ network 192.168.1.160 0.0.0.31
+ network 10.0.0.8 0.0.0.3
+ network 10.0.0.4 0.0.0.3
+!
+router bgp 65002
+ bgp log-neighbor-changes
+ no synchronization
+ neighbor 10.0.0.5 remote-as 65001
+ redistribute eigrp 100 
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
